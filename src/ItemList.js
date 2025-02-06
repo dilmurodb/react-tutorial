@@ -1,6 +1,7 @@
 import React from 'react'
+import { FaTrashAlt } from 'react-icons/fa'
 
-const ItemList = () => {
+const ItemList = ({ items, handleCheck, handleDelete }) => {
   return (
     <ul>
         {items.map((item) => (
