@@ -1,18 +1,46 @@
 import React from 'react'
+import { useState } from 'react'
+import { FaTrashAlt } from 'react-icons/fa'
 
 const Content = () => {
 
-    const handleNameChange = () => {
-        const names = ["Boris", "Cari", "Schultz", "Schwartz", "Schmidt", "Angela", "Theresa"]
-        const int = Math.floor(Math.random() * 7)
-    
-        return  names[int]
-      }
+    const [items, setItems] = useState([
+        {
+            id: 1,
+            checked: false,
+            item: "Das Brot"
+        },
+        {
+            id: 1,
+            checked: false,
+            item: "Der Wein"
+        },
+        {
+            id: 1,
+            checked: false,
+            item: "Die Birne"
+        }
+    ])
+
 
 
   return (
     <main>
-        <p>Hello {handleNameChange()}!</p>
+        <ul>
+            {items.map((item) => (
+                <li className="item" key={item.id}>
+                    <input
+                        type="checkbox"
+                        checked={item.checked}
+                    />
+                    <label>{item.item}</label>
+                    <FaTrashAlt 
+                        role="button" 
+                        tabIndex="0" 
+                    />
+                </li>
+            ))}
+        </ul>
     </main>
   )
 }
