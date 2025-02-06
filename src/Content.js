@@ -11,16 +11,26 @@ const Content = () => {
             item: "Das Brot"
         },
         {
-            id: 1,
-            checked: false,
+            id: 2,
+            checked: true,
             item: "Der Wein"
         },
         {
-            id: 1,
+            id: 3,
+            checked: false,
+            item: "Der Kuchen"
+        },
+        {
+            id: 4,
             checked: false,
             item: "Die Birne"
         }
     ])
+
+    const handleCheck = (id) => {
+        const listItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item)
+        setItems(listItems)
+    }
 
 
 
@@ -31,6 +41,7 @@ const Content = () => {
                 <li className="item" key={item.id}>
                     <input
                         type="checkbox"
+                        onChange={() => handleCheck(item.id)}
                         checked={item.checked}
                     />
                     <label>{item.item}</label>
