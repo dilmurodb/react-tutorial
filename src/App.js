@@ -7,45 +7,49 @@ import Footer from './Footer'
 
 function App() {
 
-  const [items, setItems] = useState([
-    {
-        id: 1,
-        checked: false,
-        item: "Das Brot"
-    },
-    {
-        id: 2,
-        checked: true,
-        item: "Der Wein"
-    },
-    {
-        id: 3,
-        checked: false,
-        item: "Der Kuchen"
-    },
-    {
-        id: 4,
-        checked: false,
-        item: "Die Birne"
-    }
-])
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem('grocerylist')))
 
-const handleCheck = (id) => {
+  const [newItem, setNewItem] = useState('')
+
+  const handleLocalStorage = (item) => {
+    localStorage.setItem('grocerylist', JSON.stringify(item))
+  }
+
+  const addItem = (item) => {
+    const id = items.length ? items.length + 1 : 1;
+    const newItemObj = { id: id, checked: false, item: item}
+    const listItems = [...items, newItemObj]
+    setItems(listItems)
+    handleLocalStorage(listItems)
+  }
+
+  const handleCheck = (id) => {
     const listItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item)
     setItems(listItems)
-    localStorage.setItem('grocerylist', JSON.stringify(listItems))
-}
+    handleLocalStorage(listItems)
+  }
 
-const handleDelete = (id) => {
+  const handleDelete = (id) => {
     const listItems = items.filter((item) => item.id !== id)
     setItems(listItems)
-    localStorage.setItem('grocerylist', JSON.stringify(listItems))
-}
+    handleLocalStorage(listItems)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!newItem) return;
+    addItem(newItem)
+    setNewItem('')
+
+  }
 
   return (
     <div className="App">
       <Header title = "Grocery" />
-      <AddItem />
+      <AddItem 
+          newItem={newItem}
+          setNewItem={setNewItem}
+          handleSubmit={handleSubmit} />
       <Content 
           items={items}
           handleCheck={handleCheck}
