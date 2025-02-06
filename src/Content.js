@@ -30,6 +30,7 @@ const Content = () => {
     const handleCheck = (id) => {
         const listItems = items.map((item) => item.id === id ? { ...item, checked: !item.checked } : item)
         setItems(listItems)
+        localStorage.setItem('grocerylist', JSON.stringify(listItems))
     }
 
 
