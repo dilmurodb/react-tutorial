@@ -33,6 +33,11 @@ const Content = () => {
         localStorage.setItem('grocerylist', JSON.stringify(listItems))
     }
 
+    const handleDelete = (id) => {
+        const listItems = items.filter((item) => item.id !== id)
+        setItems(listItems)
+    }
+
 
 
   return (
@@ -49,6 +54,7 @@ const Content = () => {
                         style={(item.checked) ? {textDecoration: 'line-through'} : null}
                         onDoubleClick={() => handleCheck(item.id)}>{item.item}</label>
                     <FaTrashAlt 
+                        onClick={() => handleDelete(item.id)}
                         role="button" 
                         tabIndex="0" 
                     />
