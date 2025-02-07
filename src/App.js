@@ -1,6 +1,7 @@
 import './App.css';
 import { useState } from 'react'
 import Header from './Header'
+import SearchItem from './SearchItem'
 import AddItem from './AddItem';
 import Content from './Content'
 import Footer from './Footer'
@@ -10,6 +11,8 @@ function App() {
   const [items, setItems] = useState(JSON.parse(localStorage.getItem('grocerylist')))
 
   const [newItem, setNewItem] = useState('')
+
+  const [search, setSearch] = useState('')
 
   const handleLocalStorage = (item) => {
     localStorage.setItem('grocerylist', JSON.stringify(item))
@@ -49,9 +52,14 @@ function App() {
       <AddItem 
           newItem={newItem}
           setNewItem={setNewItem}
-          handleSubmit={handleSubmit} />
+          handleSubmit={handleSubmit}
+      />
+      <SearchItem 
+          search={search}
+          setSearch={setSearch}
+      />
       <Content 
-          items={items}
+          items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
           handleCheck={handleCheck}
           handleDelete={handleDelete} />
       <Footer length={items.length} />
